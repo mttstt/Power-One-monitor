@@ -34,14 +34,14 @@ logger:
   esp8266_store_log_strings_in_flash: False
 
 # Enable Home Assistant API
-api:
+#api:
 
 # Enable ota
 ota:
 
-time:
-  - platform: homeassistant
-    id: homeassistant_time
+#time:
+#  - platform: homeassistant
+#    id: homeassistant_time
 
 text_sensor:
 - platform: custom
