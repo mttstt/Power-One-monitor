@@ -1,0 +1,105 @@
+esphome:
+  name: aurora
+  platform: ESP8266
+  board: d1_mini
+  includes:
+    - aurora.h
+  libraries:
+    - "ABB Aurora"
+
+wifi:
+  ssid: "MTT_2.4_g"
+  password: "999999999"
+
+ # Optional manual IP
+  manual_ip:
+    static_ip: 10.24.1.134
+    gateway: 10.24.1.1
+    subnet: 255.255.255.0
+    dns1: 192.168.1.1
+    dns2: 8.8.8.8
+
+# Enable captive portal
+captive_portal:
+
+mqtt:
+  broker: 192.168.1.108
+
+web_server:
+  port: 80
+
+# Enable logging
+logger:
+  level: DEBUG
+  esp8266_store_log_strings_in_flash: False
+
+# Enable Home Assistant API
+api:
+
+# Enable ota
+ota:
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
+text_sensor:
+- platform: custom
+  lambda: |-
+    auto inverter = new AuroraTextSensor ();
+    App.register_component(inverter);
+    return { inverter->TransmissionState_sensor,
+             inverter->GlobalState_sensor,
+             inverter->InverterState_sensor,
+             inverter->AlarmState_sensor,
+             inverter->Firmware_sensor,
+             inverter->SystemSerialNumber_sensor,
+             inverter->ReadLastFourAlarms_sensor,
+             inverter->ReadManufacturingWeekYear_sensor
+              };
+  text_sensors:
+  - name: "Transmission State"
+  - name: "Global State"
+  - name: "Inverter State"
+  - name: "AlarmState"
+  - name: "Firmware"
+  - name: "System serial number"
+  - name: "Last Four Alarms"
+  - name: "Manufacturing Week Year"
+
+sensor:
+- platform: custom
+  lambda: |-
+    auto inverter = new AuroraSensor ();
+    App.register_component(inverter);
+    return {inverter->PowerIn1_sensor,
+            inverter->PowerIn2_sensor,
+            inverter->GridPower_sensor,
+            inverter->TemperatureInverter_sensor,
+            inverter->TemperatureBooster_sensor,
+            inverter->DayCumulatedEnergy_sensor,
+            inverter->MonthCumulatedEnergy_sensor,
+            inverter->YearCumulatedEnergy_sensor
+             } ;
+  sensors:
+  - name: "Power In 1"
+    unit_of_measurement: 'W'
+    accuracy_decimals: 2
+  - name: "Power In 2"
+    unit_of_measurement: 'W'
+    accuracy_decimals: 2
+  - name: "Grid Power"
+    unit_of_measurement: 'W'
+    accuracy_decimals: 2
+  - name: "Temperature Inverter"
+    unit_of_measurement: °C
+    accuracy_decimals: 2
+  - name: "Temperature Booster"
+    unit_of_measurement: °C
+    accuracy_decimals: 2
+  - name: "Cumulated energy (day)"
+    unit_of_measurement: 'W'
+  - name: "Cumulated energy (month)"
+    unit_of_measurement: 'W'
+  - name: "Cumulated energy (year)"
+    unit_of_measurement: 'W'
