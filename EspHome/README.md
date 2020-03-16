@@ -1,12 +1,7 @@
-# Esphome Custom component
-
-Inverter Power One Aurora
-
+# Inverter Power One Aurora
+Image from Home Assistant
 <p align="center">
-
-   <a><img src='https://raw.githubusercontent.com/mttstt/Power-One-monitor/master/Asset/HomeAssistant.png' alt='alttext' height='60'></a>
-
-</p>
+   <a><img src='https://raw.githubusercontent.com/mttstt/Power-One-monitor/master/Asset/HomeAssistant.png' height='400'></a></p>
 
 
 ### Hardware
@@ -14,7 +9,7 @@ Wemos d1 mini + TTL to RS485
 
 
 ## Software
-
+Esphome Custom component
 
 ### Modify "ABB Aurora"
 In order to use the lib "ABB Aurora" with ESP8266 modify setup function in this way:
