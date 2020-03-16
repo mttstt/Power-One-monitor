@@ -1,10 +1,22 @@
-# Esphome
+# Esphome Custom component
 
-Tested on Wemos d1 mini
+Inverter Power One Aurora
+
+<p align="center">
+
+   <a><img src='https://raw.githubusercontent.com/mttstt/Power-One-monitor/master/Asset/HomeAssistant.png' alt='alttext' height='60'></a>
+
+</p>
+
+
+### Hardware
+Wemos d1 mini + TTL to RS485
+
+
+## Software
 
 
 ### Modify "ABB Aurora"
-
 In order to use the lib "ABB Aurora" with ESP8266 modify setup function in this way:
 
       void ABBAurora::setup(HardwareSerial &hardwareSerial, byte RXGpioPin, byte TXGpioPin, byte TXControllPin)
@@ -22,6 +34,8 @@ In order to use the lib "ABB Aurora" with ESP8266 modify setup function in this 
       #endif
       }
 
-### Esphome Custom component
+### Esphome Command
 
-esphome aurora.yaml run
+      esphome aurora.yaml compile
+
+      esphome aurora.yaml run

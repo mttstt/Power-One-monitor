@@ -23,7 +23,7 @@ class AuroraTextSensor : public PollingComponent, public TextSensor {
   TextSensor *ReadLastFourAlarms_sensor = new TextSensor();
   TextSensor *ReadManufacturingWeekYear_sensor = new TextSensor();
 
-  AuroraTextSensor() : PollingComponent(120000) { }
+  AuroraTextSensor() : PollingComponent(3600000) { }
 
   void setup() override
   {
@@ -111,8 +111,16 @@ class AuroraTextSensor : public PollingComponent, public TextSensor {
   Sensor *DayCumulatedEnergy_sensor = new Sensor();
   Sensor *MonthCumulatedEnergy_sensor = new Sensor();
   Sensor *YearCumulatedEnergy_sensor = new Sensor();
+  Sensor *VIn1_sensor = new Sensor();
+  Sensor *IIn1_sensor = new Sensor();
+  Sensor *VIn2_sensor = new Sensor();
+  Sensor *IIn2_sensor = new Sensor();
+  Sensor *IsolationResistance_sensor = new Sensor();
+  Sensor *PowerPeak_sensor = new Sensor();
+  Sensor *PowerPeakToday_sensor = new Sensor();
 
-  AuroraSensor() : PollingComponent(60000) { }
+  AuroraSensor() : PollingComponent(300000) { }
+
 
   void setup() override
   {
@@ -170,5 +178,47 @@ class AuroraTextSensor : public PollingComponent, public TextSensor {
          // ESP_LOGD("Aurora", "CURRENT YEAR Energy sensor is: %lu", inverter->CumulatedEnergy.Energy);
   	     YearCumulatedEnergy_sensor->publish_state(inverter->CumulatedEnergy.Energy);
        }
+    delay(100);
+    if (inverter->ReadDSPValue(V_IN_1, GLOBAL_MESSUREMENT))
+       {
+        // ESP_LOGD("Aurora", "V_IN_1 sensor is: %f", inverter->DSP.Value);
+         VIn1_sensor->publish_state(inverter->DSP.Value);
+       }
+    delay(100);
+    if (inverter->ReadDSPValue(I_IN_1, GLOBAL_MESSUREMENT))
+       {
+          // ESP_LOGD("Aurora", "I_IN_1 sensor is: %f", inverter->DSP.Value);
+          IIn1_sensor->publish_state(inverter->DSP.Value);
+        }
+    delay(100);
+    if (inverter->ReadDSPValue(V_IN_2, GLOBAL_MESSUREMENT))
+        {
+          // ESP_LOGD("Aurora", "V_IN_2 sensor is: %f", inverter->DSP.Value);
+          VIn2_sensor->publish_state(inverter->DSP.Value);
+         }
+    delay(100);
+    if (inverter->ReadDSPValue(I_IN_2, GLOBAL_MESSUREMENT))
+        {
+          // ESP_LOGD("Aurora", "I_IN_2 sensor is: %f", inverter->DSP.Value);
+          IIn2_sensor->publish_state(inverter->DSP.Value);
+        }
+    delay(100);
+    if (inverter->ReadDSPValue(ISOLATION_RESISTANCE, MODULE_MESSUREMENT))
+         {
+          // ESP_LOGD("Aurora", "ISOLATION_RESISTANCE sensor is: %f", inverter->DSP.Value);
+          IsolationResistance_sensor->publish_state(inverter->DSP.Value);
+         }
+    delay(100);
+    if (inverter->ReadDSPValue(POWER_PEAK, MODULE_MESSUREMENT))
+        {
+          // ESP_LOGD("Aurora", "POWER_PEAK sensor is: %f", inverter->DSP.Value);
+          PowerPeak_sensor->publish_state(inverter->DSP.Value);
+        }
+    delay(100);
+    if (inverter->ReadDSPValue(POWER_PEAK_TODAY, MODULE_MESSUREMENT))
+        {
+          // ESP_LOGD("Aurora", "POWER_PEAK_TODAY sensor is: %f", inverter->DSP.Value);
+          PowerPeakToday_sensor->publish_state(inverter->DSP.Value);
+        }
     }
-    };
+  };

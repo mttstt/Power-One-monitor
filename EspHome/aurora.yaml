@@ -8,8 +8,8 @@ esphome:
     - "ABB Aurora"
 
 wifi:
-  ssid: "MTT_2.4_g"
-  password: "???"
+  ssid: !secret Wifi_SSID
+  password: !secret Wifi_PWD
 
  # Optional manual IP
   manual_ip:
@@ -33,11 +33,12 @@ logger:
   level: DEBUG
   esp8266_store_log_strings_in_flash: False
 
-# Enable Home Assistant API
-#api:
-
 # Enable ota
 ota:
+
+
+# Enable Home Assistant API
+#api:
 
 #time:
 #  - platform: homeassistant
@@ -79,7 +80,14 @@ sensor:
             inverter->TemperatureBooster_sensor,
             inverter->DayCumulatedEnergy_sensor,
             inverter->MonthCumulatedEnergy_sensor,
-            inverter->YearCumulatedEnergy_sensor
+            inverter->YearCumulatedEnergy_sensor,
+            inverter->VIn1_sensor,
+            inverter->IIn1_sensor,
+            inverter->VIn2_sensor,
+            inverter->IIn2_sensor,
+            inverter->IsolationResistance_sensor,
+            inverter->PowerPeak_sensor,
+            inverter->PowerPeakToday_sensor
              } ;
   sensors:
   - name: "Power In 1"
@@ -102,4 +110,19 @@ sensor:
   - name: "Cumulated energy (month)"
     unit_of_measurement: 'W'
   - name: "Cumulated energy (year)"
+    unit_of_measurement: 'W'
+
+  - name: "Volt IN 1"
+    unit_of_measurement: 'V'
+  - name: "Ampere IN 1"
+    unit_of_measurement: 'A'
+  - name: "Volt IN 2"
+    unit_of_measurement: 'V'
+  - name: "Ampere IN 2"
+    unit_of_measurement: 'A'
+  - name: "Isolation Resistance"
+    unit_of_measurement: 'Ohm'
+  - name: "Power Peak"
+    unit_of_measurement: 'W'
+  - name: "Power Peak Today"
     unit_of_measurement: 'W'
