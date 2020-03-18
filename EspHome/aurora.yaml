@@ -55,8 +55,9 @@ text_sensor:
              inverter->AlarmState_sensor,
              inverter->Firmware_sensor,
              inverter->SystemSerialNumber_sensor,
-             inverter->ReadLastFourAlarms_sensor,
-             inverter->ReadManufacturingWeekYear_sensor
+             inverter->LastFourAlarms_sensor,
+             inverter->ManufacturingWeekYear_sensor,
+             inverter->Version_sensor
               };
   text_sensors:
   - name: "Transmission State"
@@ -67,6 +68,7 @@ text_sensor:
   - name: "System serial number"
   - name: "Last Four Alarms"
   - name: "Manufacturing Week Year"
+  - name: "Version"
 
 sensor:
 - platform: custom
@@ -90,10 +92,10 @@ sensor:
             inverter->PowerPeakToday_sensor
              } ;
   sensors:
-  - name: "Power In 1"
+  - name: "Power Input 1"
     unit_of_measurement: 'W'
     accuracy_decimals: 2
-  - name: "Power In 2"
+  - name: "Power Input 2"
     unit_of_measurement: 'W'
     accuracy_decimals: 2
   - name: "Grid Power"
@@ -111,14 +113,17 @@ sensor:
     unit_of_measurement: 'W'
   - name: "Cumulated energy (year)"
     unit_of_measurement: 'W'
-
-  - name: "Volt IN 1"
+  - name: "Volt input 1"
     unit_of_measurement: 'V'
-  - name: "Ampere IN 1"
+    accuracy_decimals: 2
+  - name: "Ampere input 1"
     unit_of_measurement: 'A'
-  - name: "Volt IN 2"
+    accuracy_decimals: 2
+  - name: "Volt input 2"
     unit_of_measurement: 'V'
-  - name: "Ampere IN 2"
+    accuracy_decimals: 2
+  - name: "Ampere input 2"
+    accuracy_decimals: 2
     unit_of_measurement: 'A'
   - name: "Isolation Resistance"
     unit_of_measurement: 'Ohm'
