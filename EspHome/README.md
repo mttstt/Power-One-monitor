@@ -1,11 +1,16 @@
 # Inverter Power One Aurora
 Image from Home Assistant
 <p align="center">
-   <a><img src='https://raw.githubusercontent.com/mttstt/Power-One-monitor/master/Asset/HomeAssistant.png' height='400'></a></p>
+   <a><img src='https://raw.githubusercontent.com/mttstt/Power-One-monitor/master/Asset/HomeAssistant.png' height='400'></a>
+</p>
 
 
 ### Hardware
 Wemos d1 mini + TTL to RS485
+
+<p align="center">
+   <a><img src='https://raw.githubusercontent.com/mttstt/Power-One-monitor/master/Asset/aurora.jpg' height='400'></a>
+</p>
 
 
 ## Software
