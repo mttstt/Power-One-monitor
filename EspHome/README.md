@@ -1,5 +1,6 @@
 # Inverter Power One Aurora
-Image from Home Assistant
+
+Monitoring Power Aurora from Home Assistant
 <p align="center">
    <a><img src='https://raw.githubusercontent.com/mttstt/Power-One-monitor/master/Asset/HomeAssistant.png' height='400'></a>
 </p>
