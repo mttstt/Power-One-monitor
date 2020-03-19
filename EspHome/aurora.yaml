@@ -11,7 +11,7 @@ wifi:
   ssid: !secret Wifi_SSID
   password: !secret Wifi_PWD
 
- # Optional manual IP
+  # Optional manual IP
   manual_ip:
     static_ip: 10.24.1.134
     gateway: 10.24.1.1
@@ -49,7 +49,8 @@ text_sensor:
   lambda: |-
     auto inverter = new AuroraTextSensor ();
     App.register_component(inverter);
-    return { inverter->TransmissionState_sensor,
+    return {
+             inverter->TransmissionState_sensor,
              inverter->GlobalState_sensor,
              inverter->InverterState_sensor,
              inverter->AlarmState_sensor,
@@ -58,7 +59,7 @@ text_sensor:
              inverter->LastFourAlarms_sensor,
              inverter->ManufacturingWeekYear_sensor,
              inverter->Version_sensor
-              };
+           };
   text_sensors:
   - name: "Transmission State"
   - name: "Global State"
@@ -75,22 +76,23 @@ sensor:
   lambda: |-
     auto inverter = new AuroraSensor ();
     App.register_component(inverter);
-    return {inverter->PowerIn1_sensor,
-            inverter->PowerIn2_sensor,
-            inverter->GridPower_sensor,
-            inverter->TemperatureInverter_sensor,
-            inverter->TemperatureBooster_sensor,
-            inverter->DayCumulatedEnergy_sensor,
-            inverter->MonthCumulatedEnergy_sensor,
-            inverter->YearCumulatedEnergy_sensor,
-            inverter->VIn1_sensor,
-            inverter->IIn1_sensor,
-            inverter->VIn2_sensor,
-            inverter->IIn2_sensor,
-            inverter->IsolationResistance_sensor,
-            inverter->PowerPeak_sensor,
-            inverter->PowerPeakToday_sensor
-             } ;
+    return {
+             inverter->PowerIn1_sensor,
+             inverter->PowerIn2_sensor,
+             inverter->GridPower_sensor,
+             inverter->TemperatureInverter_sensor,
+             inverter->TemperatureBooster_sensor,
+             inverter->DayCumulatedEnergy_sensor,
+             inverter->MonthCumulatedEnergy_sensor,
+             inverter->YearCumulatedEnergy_sensor,
+             inverter->VIn1_sensor,
+             inverter->IIn1_sensor,
+             inverter->VIn2_sensor,
+             inverter->IIn2_sensor,
+             inverter->IsolationResistance_sensor,
+             inverter->PowerPeak_sensor,
+             inverter->PowerPeakToday_sensor
+           };
   sensors:
   - name: "Power Input 1"
     unit_of_measurement: 'W'
