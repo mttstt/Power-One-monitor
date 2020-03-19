@@ -7,7 +7,6 @@ Image from Home Assistant
 
 ### Hardware
 Wemos d1 mini + TTL to RS485
-
 <p align="center">
    <a><img src='https://raw.githubusercontent.com/mttstt/Power-One-monitor/master/Asset/aurora.jpg' height='200'></a>
 </p>
