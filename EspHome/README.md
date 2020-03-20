@@ -2,7 +2,7 @@
 
 Monitoring Power Aurora from Home Assistant
 <p align="center">
-   <a><img src='https://raw.githubusercontent.com/mttstt/Power-One-monitor/master/Asset/HomeAssistant.png' height='400'></a>
+   <a><img src='https://raw.githubusercontent.com/mttstt/Power-One-monitor/master/Asset/homeassistant.png' height='400'></a>
 </p>
 
 
