@@ -2,7 +2,7 @@
 #include "ABBAurora.h"
 #include "ABBAuroraStrings.h"
 
-#define WAIT 50
+#define WAIT 200
 #define RX1 3			// GPIO-3
 #define TX1 1			// GPIO-1
 #define INVERTER_ADDRESS 2

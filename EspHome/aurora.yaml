@@ -44,6 +44,16 @@ ota:
 #  - platform: homeassistant
 #    id: homeassistant_time
 
+
+switch:
+  - platform: restart
+    name: "Riavvia sensore"
+
+binary_sensor:
+  - platform: status
+    name: " Stato sensore"
+
+
 text_sensor:
 - platform: custom
   lambda: |-
@@ -71,7 +81,11 @@ text_sensor:
   - name: "Manufacturing Week Year"
   - name: "Version"
 
+
 sensor:
+- platform: wifi_signal
+  name: "Segnale wifi sensore"
+  update_interval: 60s  
 - platform: custom
   lambda: |-
     auto inverter = new AuroraSensor ();
