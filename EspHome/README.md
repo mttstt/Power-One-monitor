@@ -2,14 +2,14 @@
 
 Monitoring Power Aurora from Home Assistant
 <p align="center">
-   <a><img src='https://raw.githubusercontent.com/mttstt/Power-One-monitor/master/Asset/homeassistant.png' height='400'></a>
+   <a><img src='./../Asset/homeassistant.png?raw=true' height='400'></a>
 </p>
 
 
 ### Hardware
 Wemos d1 mini + TTL to RS485
 <p align="center">
-   <a><img src='https://raw.githubusercontent.com/mttstt/Power-One-monitor/master/Asset/aurora.jpg' height='200'></a>
+   <a><img src='./../Asset/ABBUno.png?raw=true' height='200'></a>
 </p>
 
 
