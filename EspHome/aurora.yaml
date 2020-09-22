@@ -1,3 +1,7 @@
+substitutions:
+  devicename: aurora
+  upper_devicename: ABB Aurora
+
 esphome:
   name: aurora
   platform: ESP8266
@@ -5,7 +9,7 @@ esphome:
   includes:
     - aurora.h
   libraries:
-    - "ABB Aurora"
+    - "https://github.com/mttstt/ABBAurora.git#patch-2"
 
 wifi:
   ssid: !secret Wifi_SSID
