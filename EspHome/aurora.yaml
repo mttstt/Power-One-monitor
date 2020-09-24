@@ -10,8 +10,6 @@ esphome:
     - ABBAuroraStrings.cpp
     - ABBAuroraStrings.h
 
-
-
 wifi:
   ssid: !secret Wifi_SSID
   password: !secret Wifi_PWD
