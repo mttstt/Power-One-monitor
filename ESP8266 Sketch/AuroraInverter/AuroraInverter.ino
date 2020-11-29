@@ -6,11 +6,11 @@
 // https://forum.arduino.cc/index.php?topic=154407.0
 
 
-#include <ESP8266WiFi.h>
-#include <WiFiClient.h>
-#include <ESP8266WiFiMulti.h>
-#include <ESP8266mDNS.h>
-#include <ESP8266WebServer.h>
+//#include <ESP8266WiFi.h>
+//#include <WiFiClient.h>
+//#include <ESP8266WiFiMulti.h>
+//#include <ESP8266mDNS.h>
+//#include <ESP8266WebServer.h>
 #include <SoftwareSerial.h>
 
 //RS485 control
@@ -18,7 +18,7 @@
 #define RS485Transmit HIGH
 #define RS485Receive LOW
 
-// TX1 at GPIO15 and RX1 at GPIO13 => Serial1.println
+// TX1 at GPIO15 and RX1 at GPIO13 => Serial2.println
 
 class clsAurora {
 private:
@@ -81,13 +81,13 @@ private:
       digitalWrite(SSerialTxControl, RS485Transmit);
       delay(50);
 
-      if (Serial1.write(SendData, sizeof(SendData)) != 0) {
-        Serial1.flush();
+      if (Serial2.write(SendData, sizeof(SendData)) != 0) {
+        Serial2.flush();
         SendStatus = true;
 
         digitalWrite(SSerialTxControl, RS485Receive);
 
-        if (Serial1.readBytes(ReceiveData, sizeof(ReceiveData)) != 0) {
+        if (Serial2.readBytes(ReceiveData, sizeof(ReceiveData)) != 0) {
           if ((int)word(ReceiveData[7], ReceiveData[6]) == Crc16(ReceiveData, 0, 6)) {
             ReceiveStatus = true;
             break;
@@ -1169,8 +1169,9 @@ String LeggiProduzioneCallback(byte Menu) {
 
 void setup()
 {
-  Serial1.setTimeout(500);
-  Serial.begin(9600);
+  Serial2.setTimeout(500);
+  Serial.begin(115200);
+  Serial2.begin(19200);
   pinMode(SSerialTxControl, OUTPUT);
   digitalWrite(SSerialTxControl, RS485Receive);  // Init Transceiver
 
