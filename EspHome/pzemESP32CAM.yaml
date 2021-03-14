@@ -1,0 +1,147 @@
+esphome:
+  name: pzem
+  platform: ESP32
+#  board: esp32dev
+  board: esp32cam
+  arduino_version: latest
+
+wifi:
+  ssid: !secret Wifi_SSID
+  password: !secret Wifi_PWD
+  # Optional manual IP
+  manual_ip:
+    static_ip: 192.168.1.10
+    gateway: 192.168.1.1
+    subnet: 255.255.255.0
+    dns1: 192.168.1.1
+    dns2: 8.8.8.8
+ # This will cause ESPHome to only enable the access point when no connection to the WiFi router can be made.
+  ap:
+    ssid: pzemRecovery
+
+# Enable captive portal
+captive_portal:
+
+web_server:
+   port: 80
+
+# Enable logging
+logger:
+#  baud_rate: 0
+  level: VERY_VERBOSE
+
+
+
+# Enable ota
+ota:
+
+# Enable Home Assistant API
+api:
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
+binary_sensor:
+  - platform: status
+    name: " Stato sensore"
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: Address_IP
+    ssid:
+      name: SSID
+    bssid:
+      name: BSSID
+  - platform: version
+    name: "ESPHome Version"
+
+output:
+  - platform: ledc
+    pin: GPIO4
+    id: gpio_4
+    channel: 2
+light:
+  - platform: binary
+    output: gpio_4
+    name: "Luce webcam"
+
+
+switch:
+  - platform: restart
+    name: "Riavvia sensore"
+#  - platform: gpio
+#    pin: GPIO4
+#    name: "Luce webcam"
+
+esp32_camera:
+  name: corridoio
+  external_clock:
+    pin: GPIO0
+    frequency: 20MHz
+  i2c_pins:
+    sda: GPIO26
+    scl: GPIO27
+  data_pins: [GPIO5, GPIO18, GPIO19, GPIO21, GPIO36, GPIO39, GPIO34, GPIO35]
+  vsync_pin: GPIO25
+  href_pin: GPIO23
+  pixel_clock_pin: GPIO22
+  power_down_pin: GPIO32
+  jpeg_quality: 10
+  horizontal_mirror: false
+  #resolution: 800x600
+
+modbus:
+  uart_id: uartpzem
+
+uart:
+  - id: uartpzem
+    rx_pin: GPIO2
+    tx_pin: GPIO4
+    baud_rate: 9600
+    stop_bits: 2
+
+sensor:
+  - platform: pzemac
+    address: 1
+    current:
+      name: "PZEM-004T V3 Current(1)"
+    voltage:
+      name: "PZEM-004T V3 Voltage(1)"
+    energy:
+      name: "PZEM-004T V3 Energy(1)"
+    power:
+      name: "PZEM-004T V3 Power(1)"
+    frequency:
+      name: "PZEM-004T V3 Frequency(1)"
+    power_factor:
+      name: "PZEM-004T V3 Power Factor(1)"
+    update_interval: 60s
+
+  - platform: pzemac
+    address: 2
+    current:
+      name: "PZEM-004T V3 Current (2)"
+    voltage:
+      name: "PZEM-004T V3 Voltage(2)"
+    energy:
+      name: "PZEM-004T V3 Energy(2)"
+    power:
+      name: "PZEM-004T V3 Power(2)"
+    frequency:
+      name: "PZEM-004T V3 Frequency(2)"
+    power_factor:
+      name: "PZEM-004T V3 Power Factor(2)"
+    update_interval: 60s
+
+  - platform: uptime
+    name: Uptime
+    icon: mdi:clock-outline
+    update_interval: 300s
+    unit_of_measurement: days
+    filters:
+      - multiply: 0.000011574
+  - platform: wifi_signal
+    name: "Segnale wifi sensore"
+    update_interval: 60s

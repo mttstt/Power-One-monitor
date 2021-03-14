@@ -13,7 +13,6 @@ esphome:
 wifi:
   ssid: !secret Wifi_SSID
   password: !secret Wifi_PWD
-
   # Optional manual IP
   manual_ip:
     static_ip: 10.24.1.134
@@ -21,67 +20,79 @@ wifi:
     subnet: 255.255.255.0
     dns1: 192.168.1.1
     dns2: 8.8.8.8
+ # This will cause ESPHome to only enable the access point when no connection to the WiFi router can be made.
+  # ap:
+  #   ssid: AuroraRecovery
 
 # Enable captive portal
-captive_portal:
+# captive_portal:
 
-mqtt:
-  broker: 192.168.1.108
+# mqtt:
+#  broker: 192.168.1.108
 
-web_server:
-  port: 80
+#web_server:
+#  port: 80
 
 # Enable logging
 logger:
-  level: INFO
-  baud_rate: 19200
+  level: VERBOSE
+  hardware_uart: UART1 # TX: GPIO2, RX: None (Only on ESP8266)
   esp8266_store_log_strings_in_flash: False
 
 # Enable ota
 ota:
 
-
 # Enable Home Assistant API
+# Per utilizzare le api invece che mqtt (molto più lento) bisogna renderere raggiungibile
+# esphome dalle api. Nel caso si usi l'esp8266 come router wifi martin-ger/esp_wifi_repeater,
+# ecco la configurazione:
+##
+# telnet 192.168.1.106 7777
+# set led 255
+# portmap add TCP 6053 10.24.1.134 6053
+# save
+#
+# NON FUNZIONA il discorso delle API
+#
 api:
 
-time:
-  - platform: homeassistant
-    id: homeassistant_time
+#time:
+#  - platform: homeassistant
+#    id: homeassistant_time
 
 
-switch:
-  - platform: restart
-    name: "Riavvia sensore"
-
-binary_sensor:
-  - platform: status
-    name: " Stato sensore"
-
+# switch:
+#   - platform: restart
+#     name: "Riavvia sensore"
+#
+# binary_sensor:
+#   - platform: status
+#     name: " Stato sensore"
 
 text_sensor:
-  - platform: wifi_info
-    ip_address:
-      name: Adress_IP
-    ssid:
-      name: SSID
-    bssid:
-      name: BSSID
-  - platform: version
-    name: "ESPHome Version"
+  # - platform: wifi_info
+  #   ip_address:
+  #     name: Adress_IP
+  #   ssid:
+  #     name: SSID
+  #   bssid:
+  #     name: BSSID
+  # - platform: version
+  #   name: "ESPHome Version"
   - platform: custom
     lambda: |-
-      auto inverter = new AuroraTextSensor ();
-      App.register_component(inverter);
+      auto inverter1 = new AuroraSensor ();
+      App.register_component(inverter1);
       return {
-             inverter->TransmissionState_sensor,
-             inverter->GlobalState_sensor,
-             inverter->InverterState_sensor,
-             inverter->AlarmState_sensor,
-             inverter->Firmware_sensor,
-             inverter->SystemSerialNumber_sensor,
-             inverter->LastFourAlarms_sensor,
-             inverter->ManufacturingWeekYear_sensor,
-             inverter->Version_sensor
+             inverter1->TransmissionState_sensor,
+             inverter1->GlobalState_sensor,
+             inverter1->InverterState_sensor,
+             inverter1->AlarmState_sensor,
+             inverter1->Firmware_sensor,
+             inverter1->SystemSerialNumber_sensor,
+             inverter1->LastFourAlarms_sensor,
+             inverter1->ManufacturingWeekYear_sensor,
+             inverter1->Version_sensor
              };
     text_sensors:
     - name: "Transmission State"
@@ -96,16 +107,16 @@ text_sensor:
 
 
 sensor:
-- platform: uptime
-  name: Uptime
-  icon: mdi:clock-outline
-  update_interval: 300s
-  unit_of_measurement: days
-  filters:
-    - multiply: 0.000011574
-- platform: wifi_signal
-  name: "Segnale wifi sensore"
-  update_interval: 60s
+# - platform: uptime
+#   name: Uptime
+#   icon: mdi:clock-outline
+#   update_interval: 300s
+#   unit_of_measurement: days
+#   filters:
+#     - multiply: 0.000011574
+# - platform: wifi_signal
+#   name: "Segnale wifi sensore"
+#   update_interval: 60s
 - platform: custom
   lambda: |-
     auto inverter = new AuroraSensor ();

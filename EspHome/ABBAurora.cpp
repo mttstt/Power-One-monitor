@@ -54,7 +54,6 @@ int ABBAurora::Crc16(byte *data, int offset, int count)
 
 bool ABBAurora::Send(byte address, byte param0, byte param1, byte param2, byte param3, byte param4, byte param5, byte param6)
 {
-
     SendStatus = false;
     ReceiveStatus = false;
 
@@ -78,15 +77,30 @@ bool ABBAurora::Send(byte address, byte param0, byte param1, byte param2, byte p
     {
         digitalWrite(TXPinControl, RS485Transmit);
         delay(50);
+        Serial1.print(SendData[0]);
+        Serial1.print(SendData[1]);
+        Serial1.print(SendData[2]);
+        Serial1.print(SendData[3]);
+        Serial1.print(SendData[4]);
+        Serial1.print(SendData[5]);
+        Serial1.print(SendData[6]);
+        Serial1.print(SendData[7]);
+        Serial1.print(" - ");
+        Serial1.print(SendData[8]);
+        Serial1.println(SendData[9]);
 
-        if (serial->write(SendData, sizeof(SendData)) != 0)
+        if ( serial->write(SendData, sizeof(SendData) != 0))
         {
             serial->flush();
             SendStatus = true;
 
             digitalWrite(TXPinControl, RS485Receive);
 
-            if (serial->readBytes(ReceiveData, sizeof(ReceiveData)) != 0)
+            int s = serial->readBytes(ReceiveData, sizeof(ReceiveData));
+            Serial1.print("Number Byte read: ");
+            Serial1.println(s,DEC);
+
+            if ( s != 0)
             {
                 if ((int)word(ReceiveData[7], ReceiveData[6]) == Crc16(ReceiveData, 0, 6))
                 {

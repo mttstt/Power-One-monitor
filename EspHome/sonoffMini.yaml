@@ -1,0 +1,98 @@
+esphome:
+  name: sonoff_mini
+  platform: ESP8266
+  board: esp01_1m
+
+wifi:
+  ssid: !secret Wifi_SSID
+  password: !secret Wifi_PWD
+  manual_ip:
+    static_ip: 192.168.1.133
+    gateway: 192.168.1.1
+    subnet: 255.255.255.0
+    dns1: 192.168.1.1
+    dns2: 8.8.8.8
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: Address_IP
+    ssid:
+      name: SSID
+    bssid:
+      name: BSSID
+  - platform: version
+    name: "ESPHome Version"
+
+# Enable logging
+logger:
+  level: VERBOSE
+substitutions:
+  hostname: "sonoff_mini"
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+# used just for testing, otherwise no need for it
+web_server:
+  port: 80
+
+status_led:
+  pin:
+    number: GPIO13
+    inverted: true
+
+binary_sensor:
+  - platform: gpio
+    pin: GPIO00
+    id: reset
+    internal: true
+    filters:
+      - invert:
+      - delayed_off: 10ms
+    on_press:
+      - switch.toggle:
+          id: relay_1
+
+  - platform: gpio
+    name: "$hostname switch"
+    pin: GPIO04
+    id: switch_1
+    on_state:
+      then:
+        - logger.log: "On_State"
+        - switch.toggle:
+            id: relay_1
+    on_click:
+      then:
+        - logger.log: "On-Click"
+        - homeassistant.service:
+            service: light.toggle
+            data:
+              entity_id: light.lampada
+
+switch:
+  - platform: gpio
+    name: "$hostname relay"
+    icon: "mdi: lightbulb_outline"
+    pin: GPIO12
+    id: relay_1
+    restore_mode: restore_default_off
+
+sensor:
+  - platform: uptime
+    name: Uptime
+    icon: mdi:clock-outline
+    update_interval: 300s
+    unit_of_measurement: days
+    filters:
+      - multiply: 0.000011574
+  - platform: wifi_signal
+    name: "Segnale wifi sensore"
+    update_interval: 60s
